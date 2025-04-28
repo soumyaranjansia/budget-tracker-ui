@@ -2,11 +2,15 @@ import { useState } from 'react';
 import { useAddCategoryMutation } from './Api/DashBoardApi'; // Adjust path as needed
 import { toast } from 'react-toastify';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// interface AddCategoryFormProps {
+//   showToast: (message: string, type: 'success' | 'error') => void;
+// }
+// Define the type for the props
 interface AddCategoryFormProps {
-  showToast: (message: string, type: 'success' | 'error') => void;
+  onAddCategory: () => void;  // onAddCategory is a function with no arguments and no return
 }
-
-export default function AddCategoryForm({ onAddCategory }) {
+export default function AddCategoryForm({ onAddCategory  }:AddCategoryFormProps) {
   const [name, setName] = useState('');
   const [addCategory, { isLoading }] = useAddCategoryMutation();
 

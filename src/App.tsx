@@ -31,7 +31,7 @@ export default function App() {
 
       <div className="flex-1">
         {loggedIn ? (
-          <Dashboard onLogout={handleLogout} />
+          <Dashboard />
         ) : (
           <Login onLogin={() => setLoggedIn(true)} />
         )}
@@ -42,9 +42,15 @@ export default function App() {
     </div>
   );
 }
-
+// Define the types for your props
+interface HeaderProps {
+  loggedIn: boolean;
+  handleLogout: () => void;
+  toggleMobileMenu: () => void;
+  isMobileMenuOpen: boolean;
+}
 // Header Component
-function Header({ loggedIn, handleLogout, toggleMobileMenu, isMobileMenuOpen }) {
+function Header({ loggedIn, handleLogout, toggleMobileMenu, isMobileMenuOpen }:HeaderProps) {
   return (
     <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-md sticky top-0 z-10">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">

@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useState, useEffect} from 'react';
 import { useGetTransactionsQuery, useGetBudgetSummaryQuery } from './Api/DashBoardApi';
 import TransactionForm from './TransactionForm';
 import TransactionList from './TransactionList';
@@ -17,34 +18,35 @@ export default function Dashboard() {
 
   const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>(transactions);
 
-  const income = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
-  const expense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+  const income = transactions.filter((t: Transaction) => t.type === 'income').reduce((sum: number, t: Transaction) => sum + t.amount, 0);
+  const expense = transactions.filter((t: Transaction) => t.type === 'expense').reduce((sum: number, t: Transaction) => sum + t.amount, 0);
+
   const balance = income - expense;
 
   useEffect(() => {
     setFilteredTransactions(transactions);
   }, [transactions]);
 
-  const addTransaction = (transaction: Transaction) => {
-    setFilteredTransactions([transaction, ...filteredTransactions]);
-  };
+  // const addTransaction = (transaction: Transaction) => {
+  //   setFilteredTransactions([transaction, ...filteredTransactions]);
+  // };
 
   const deleteTransaction = (id: string) => {
     setFilteredTransactions(filteredTransactions.filter(t => t.id !== id));
   };
 
-  const handleFilterChange = (filter: string) => {
-    const filtered = transactions.filter(t => 
-      t.title.toLowerCase().includes(filter.toLowerCase()) ||
-      t.category.toLowerCase().includes(filter.toLowerCase())
-    );
-    setFilteredTransactions(filtered);
-  };
+  // const handleFilterChange = (filter: string) => {
+  //   const filtered = transactions.filter(t => 
+  //     t.title.toLowerCase().includes(filter.toLowerCase()) ||
+  //     t.category.toLowerCase().includes(filter.toLowerCase())
+  //   );
+  //   setFilteredTransactions(filtered);
+  // };
 
-  // Function to show toast messages
-  const showToast = (message: string, type: 'success' | 'error') => {
-    toast[type](message);
-  };
+  // // Function to show toast messages
+  // const showToast = (message: string, type: 'success' | 'error') => {
+  //   toast[type](message);
+  // };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>{String(error) || 'Failed to load transactions'}</div>;
@@ -98,13 +100,13 @@ export default function Dashboard() {
             await refetchBudgetSummary();
           }}
           refetchCategories={refetchCategories}
-          showToast={showToast}
+          
         />
       </div>
 
       {/* Budget Form */}
       <div className="flex-1 min-w-[300px] p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-        <BudgetForm showToast={showToast} />
+        <BudgetForm  />
       </div>
 
       {/* Add Category Form */}
@@ -118,7 +120,7 @@ export default function Dashboard() {
               toast.success('Category refreshed...');
             }
           }}
-          showToast={showToast}
+          
         />
       </div>
     </div>
@@ -128,7 +130,7 @@ export default function Dashboard() {
       <TransactionList 
         transactions={filteredTransactions}
         onDelete={deleteTransaction}
-        onFilter={handleFilterChange}
+        // onFilter={handleFilterChange}
       />
     </div>
   );

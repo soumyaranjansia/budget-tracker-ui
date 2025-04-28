@@ -1,8 +1,16 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useGetCategoriesQuery, useAddIncomeMutation, useAddExpenseMutation } from './Api/DashBoardApi';
 import { toast } from 'react-toastify';
+interface TransactionFormProps {
+  onAdd: () => void; // Specify the correct type for 'onAdd' if needed
+  refetchCategories: () => void; // Specify the correct type for 'refetchCategories' based on your usage
+}
+interface CategoryType{
+    id:number;
+    name:string;
+}
 
-export default function TransactionForm({ onAdd ,refetchCategories }) {
+export default function TransactionForm({ onAdd ,refetchCategories }:TransactionFormProps) {
   const [amount, setAmount] = useState('');
   const [type, setType] = useState('income');
   const [categoryId, setCategoryId] = useState('');
@@ -15,27 +23,22 @@ export default function TransactionForm({ onAdd ,refetchCategories }) {
   const refreshCategories = async () => {
     await refetch();
   };
+  // Create a ref to store the latest refetchCategories function
+  const refetchCategoriesRef = useRef(refetchCategories);
   // Call refreshCategories when parent tells
   useEffect(() => {
-    if (refetchCategories) {
-      refetchCategories = refreshCategories;
-    }
+    // if (refetchCategories) {
+      refetchCategoriesRef.current = refreshCategories;
+    // }
   }, [refetchCategories]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!amount || !type || !categoryId) {
       toast.error('Please fill all fields');
       return;
     }
-
-    const newTransaction = {
-      id: Date.now(),
-      amount: parseFloat(amount),
-      type,
-      categoryId: parseInt(categoryId),
-    };
 
     const transactionToSend = {
       amount: parseFloat(amount),
@@ -109,7 +112,7 @@ console.log(type);
       required
     >
       <option value="">Select category</option>
-      {categories.map((category) => (
+      {categories.map((category: CategoryType) => (
         <option key={category.id} value={category.id}>
           {category.name}
         </option>

@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'; // Notice /react
 
 // Define types
-interface BudgetSummaryQuery {
-  month: number;
-  year: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// interface BudgetSummaryQuery {
+//   month: number;
+//   year: number;
+// }
 
 interface Income {
   // Define your income fields here, like:
@@ -33,7 +34,7 @@ interface Category{
 export const dashboardApi = createApi({
   reducerPath: 'dashboardApi',
   baseQuery: fetchBaseQuery({ 
-    baseUrl: 'https://budget-tracker-backend-production-2231.up.railway.app/api',
+    baseUrl: 'https://web-production-cd0a5.up.railway.app/api',
     // prepareHeaders: (headers) => {
     //   const token = localStorage.getItem('token'); // Fetch token from localStorage
     //   if (token) {
@@ -140,5 +141,4 @@ export const {
   useAddBudgetMutation,
   useGetCategoriesQuery,
   useAddCategoryMutation,
-  useAddTransactionMutation
 } = dashboardApi;

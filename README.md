@@ -1,5 +1,14 @@
 # React + TypeScript + Vite
 
+
+you can access the site using this url-https://soumyaranjansia.github.io/budget-tracker-ui/
+
+username-testuser
+password-Test@123
+
+
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
